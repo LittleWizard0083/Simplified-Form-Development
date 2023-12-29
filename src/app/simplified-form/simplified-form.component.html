@@ -1,0 +1,64 @@
+<form name="form" #f="ngForm" (ngSubmit)="f.form.valid && onSubmit()" 
+novalidate class="example-form">
+<mat-form-field class="example-full-width">
+    <mat-label form="name">Name</mat-label>
+    <input type="text" matInput class="form-control" id="name" 
+           required [(ngModel)]="form.name" #name="ngModel"
+           name="name" [ngClass]="{ 'is-valid': f.submitted && name.errors}">
+           @if (f.submitted && name.errors) {
+            <div class="invalid-feedback">
+                @if (name.errors['required']) {
+                    <div>Name is required</div>
+                }
+            </div>
+           } 
+</mat-form-field>
+<mat-form-field class="example-full-width">
+    <mat-label for="email">Email</mat-label>
+    <input type="email" matInput class="form-control" id="email"
+           required [(ngModel)]="form.email" #email="ngModel"
+           placeholder="Ex. pat@example.com" email
+           name="email" [ngClass]="{'is-valid': f.submitted && email.errors}">
+           @if (f.submitted && email.errors) {
+            <div class="invalid-feedback">
+                @if (email.errors['required']) {
+                    <div>Email is required</div>
+                }
+                @if (email.errors['email']) {
+                    <div>Email is invalid</div>
+                }
+            </div>
+           }
+</mat-form-field>
+<mat-form-field class="example-full-width">
+    <mat-label for="password">Password</mat-label>
+    <input type="password" matInput class="form-control" id="password" #password="ngModel"
+           required placeholder="Password" appPasswordValidator [(ngModel)]="form.password"
+           name="password" [type]="hide ? 'password' : 'text'" >
+           @if (f.submitted && password.errors) {
+            <div class="invalid-feedback">
+                @if (password.errors['required']) {
+                    <div>Password is required</div>
+                }
+                @if (password.errors['passwordValidator']) {
+                    <div>Password is invalid</div>
+                }
+            </div>
+           }
+           <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+</mat-form-field>
+<mat-form-field class="example-full-width">
+    <mat-label for="role">User Role</mat-label>
+    <mat-select class="example-full-width" id="userRole"
+           required
+           name="userRole">
+           @for (user of userRoles; track user.id) {
+            <mat-option [value]="user.name"> {{ user.name }}</mat-option>
+           } @empty {
+            <span> Empty list of user roles</span>}
+           </mat-select>
+</mat-form-field>
+<button mat-flat-button color="primary">Submit</button> 
+</form>

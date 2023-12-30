@@ -1,6 +1,6 @@
 import { Component   } from "@angular/core";
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormControl, FormsModule, NgForm } from "@angular/forms";
+import { FormControl, FormsModule } from "@angular/forms";
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from "@angular/common";
@@ -36,14 +36,14 @@ export class SimplifiedFormComponent {
         userRole: ''
     }
 
-    public validate(form: NgForm): void {
+    /*public validate(form: NgForm): void {
         if (form.invalid) {
             for (const control of Object.keys(form.controls)) {
                 form.controls[control].markAsTouched();
             }
             return;
         }
-    }
+    }*/
 
     onSubmit() { this.submitted = true};
 }

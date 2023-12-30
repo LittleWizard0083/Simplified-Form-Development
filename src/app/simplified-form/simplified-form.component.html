@@ -34,14 +34,29 @@ novalidate class="example-form">
     <mat-label for="password">Password</mat-label>
     <input type="password" matInput class="form-control" id="password" #password="ngModel"
            required placeholder="Password" appPasswordValidator [(ngModel)]="form.password"
-           name="password" [type]="hide ? 'password' : 'text'" >
-           @if (f.submitted && password.errors) {
+           name="password" [type]="hide ? 'password' : 'text'" minlength="8">
+           @if (f.submitted && password.errors && (f.touched || f.dirty)) {
             <div class="invalid-feedback">
+                @if (password.errors['minlength']) {
+                    <div>8 minimum characters required</div>
+                }
                 @if (password.errors['required']) {
                     <div>Password is required</div>
                 }
-                @if (password.errors['passwordValidator']) {
+                @if (password.errors[0]['passwordValidator']) {
                     <div>Password is invalid</div>
+                }
+                @if (password.errors[1]['passwordValidatorLowerCase']){
+                    <div>Lower is required</div>
+                }
+                @if (password.errors[2]['passwordValidatorUpperCase']){
+                    <div>Uppercase is required</div>
+                }
+                @if (password.errors[3]['passwordValidatorCipher']){
+                    <div>Number is required</div>
+                }
+                @if (password.errors[4]['passwordValidatorSpecialChar']){
+                    <div>Special Char as : [ &#64;#$%^&+!= ] is required</div>
                 }
             </div>
            }
